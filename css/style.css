@@ -33,6 +33,16 @@ html {
     html {
       font-size: 65%; } }
 
+#webgl-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1; /* Le place tout au fond */
+    pointer-events: none; /* Laisse passer les clics vers le site HTML */
+}
+
 body {
   box-sizing: border-box;
   position: relative;
@@ -40,7 +50,8 @@ body {
   font-family: 'DM Sans', sans-serif;
   overflow-x: hidden;
   overflow-y: scroll;
-  font-family: 'DM Sans', sans-serif;}
+  font-family: 'DM Sans', sans-serif;
+  background-color: transparent;}
 
 a {
   text-decoration: none;
@@ -69,6 +80,24 @@ textarea {
   text-align: center; }
   @media only screen and (max-width: 37.5em) {
     .heading-primary {
+      font-size: 4.5rem; } }
+
+.heading-secondary {
+  font-size: 3rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-align: center; }
+  @media only screen and (max-width: 37.5em) {
+    .heading-secondary {
+      font-size: 4.5rem; } }
+
+.heading-ter {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-align: center; }
+  @media only screen and (max-width: 37.5em) {
+    .heading-ter {
       font-size: 4.5rem; } }
 
 .heading-sec__mb-bg {
@@ -702,3 +731,105 @@ textarea {
   to {
     opacity: 0;
     top: 27px; } }
+
+#ascii-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1; /* Place le canvas derrière le site */
+    pointer-events: none; /* Empêche de bloquer les clics */
+    background-color: #000000; /* Fond 100% noir */
+}
+
+/* ==========================================================================
+   PASSAGE EN DARK MODE ET TRANSPARENCE POUR LA 3D
+   ========================================================================== */
+
+/* 1. Suppression des arrière-plans pour voir le canvas Three.js */
+body, 
+section, 
+header, 
+footer,
+.about, 
+.projects, 
+.contact, 
+.home-hero,
+.main-footer,
+.dynamicBg,
+.sec-pad {
+    background-color: transparent !important;
+    background: none !important;
+}
+
+/* On enlève aussi les fonds blancs des cartes/blocs s'il y en a */
+.projects__row, 
+.about__content-main, 
+.about__content-skills,
+.contact__form-container {
+    background-color: rgba(0, 0, 0, 0.2) !important; /* Un noir très léger pour garder la lisibilité sans cacher la 3D */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important; /* Ombre douce */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Bordure subtile pour délimiter */
+    border-radius: 10px;
+}
+
+/* 2. Passage des polices en teintes claires */
+body, 
+p, 
+span, 
+li, 
+a, 
+.text-primary,
+.heading-sec__sub,
+.about__content-details-para,
+.projects__row-content-desc {
+    color: #d1d5db !important; /* Gris clair agréable à lire */
+}
+
+h1, 
+h2, 
+h3, 
+h4, 
+h5, 
+h6, 
+.heading-primary, 
+.heading-sec__main, 
+.about__content-title,
+.projects__row-content-title,
+.header__logo-sub {
+    color: #ffffff !important; /* Blanc pur pour les titres */
+}
+
+/* 3. Adaptation du menu de navigation */
+.header {
+    background-color: rgba(10, 10, 10, 0.8) !important; /* Menu semi-transparent */
+    backdrop-filter: blur(10px); /* Effet verre dépoli très moderne */
+}
+
+.header__link, 
+.header__sm-menu-link a {
+    color: #ffffff !important;
+}
+
+/* 4. Adaptation du formulaire de contact */
+.contact__form-label {
+    color: #ffffff !important;
+}
+
+.contact__form-input {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.contact__form-input::placeholder {
+    color: #9ca3af !important;
+}
+
+/* 5. Esthétique des badges de compétences (Skills) */
+.skills__skill {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
