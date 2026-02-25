@@ -732,15 +732,15 @@ textarea {
     opacity: 0;
     top: 27px; } }
 
-#ascii-canvas {
+#ascii-container {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: -1; /* Place le canvas derrière le site */
-    pointer-events: none; /* Empêche de bloquer les clics */
-    background-color: #000000; /* Fond 100% noir */
+    z-index: -1;
+    pointer-events: none;
+    background-color: #050505;
 }
 
 /* ==========================================================================

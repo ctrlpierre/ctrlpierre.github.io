@@ -1,77 +1,91 @@
-// 1. Détection automatique du canvas (anti-erreur)
-const canvas = document.getElementById('ascii-canvas') || document.getElementById('webgl-canvas');
+// 1. INITIALISATION CLASSIQUE THREE.JS
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.z = 50;
 
-if (!canvas) {
-    console.error("ERREUR : Le canvas est introuvable dans ton fichier HTML !");
-}
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
 
-const ctx = canvas.getContext('2d');
-let width, height, cols, rows;
+// 2. LA MAGIE : L'EFFET ASCII
+// On passe le renderer, les caractères (du plus sombre au plus clair) et les options
+const effect = new THREE.AsciiEffect(renderer, ' ·×÷=∫∑∆πγβ', { invert: true, resolution: 0.2 });
+effect.setSize(window.innerWidth, window.innerHeight);
 
-// 2. Palette d'intensité avec tes symboles mathématiques (Gamma, Bêta, etc.)
-// Organisés du plus "léger" au plus "dense" visuellement
-const chars = " ·×÷=∫∑∆πγβ"; 
-const fontSize = 16; 
+// On applique nos styles au container généré
+effect.domElement.id = 'ascii-container';
+effect.domElement.style.color = '#ffffffff'; // Ton cyan
+effect.domElement.style.backgroundColor = '#050505'; // Fond noir
+document.body.appendChild(effect.domElement); // On l'ajoute au HTML
 
-// Ajustement de la grille à la taille de l'écran
-function resize() {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
-    cols = Math.floor(width / fontSize);
-    rows = Math.floor(height / fontSize);
-}
-window.addEventListener('resize', resize);
-resize();
+// 3. LA LUMIÈRE (Crucial pour créer les contrastes clairs/foncés)
+const pointLight1 = new THREE.PointLight(0xffffff, 1);
+pointLight1.position.set(100, 100, 100);
+scene.add(pointLight1);
 
-let time = 0;
+const pointLight2 = new THREE.PointLight(0xffffff, 0.5);
+pointLight2.position.set(-100, -100, -100);
+scene.add(pointLight2);
 
-function animate() {
-    // Fond noir pur
-    ctx.fillStyle = "#000000";
-    ctx.fillRect(0, 0, width, height);
+// 4. L'OBJET 3D (Pour tester immédiatement)
+// On crée un nœud mathématique complexe
+const geometry = new THREE.TorusKnotGeometry(15, 4, 100, 16);
+// Le matériau doit réagir à la lumière (Phong ou Standard)
+const material = new THREE.MeshPhongMaterial({ color: 0xffffff }); 
+const torusKnot = new THREE.Mesh(geometry, material);
+scene.add(torusKnot);
 
-    // Couleur cyan façon Terminal
-    ctx.font = fontSize + "px monospace";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
+/* // =========================================================
+// POUR CHARGER TON PROPRE MODÈLE (.gltf ou .glb) PLUS TARD :
+// Décommente ce bloc et commente le TorusKnot au-dessus !
+// =========================================================
 
-    time += 0.03;
-
-    // Dessin de la grille mathématique
-    for (let i = 0; i < cols; i++) {
-        for (let j = 0; j < rows; j++) {
-            let x = (i - cols / 2) * 0.1;
-            let y = (j - rows / 2) * 0.1;
-            let distance = Math.sqrt(x * x + y * y);
-
-            let z = Math.sin(distance * 2 - time * 2) * 0.5 
-                  + Math.cos(x * 1.5 + time) * 0.25 
-                  + Math.sin(y * 1.2 - time * 0.5) * 0.25;
-
-            let normalizedZ = (z + 1) / 2;
-            let charIndex = Math.floor(normalizedZ * chars.length);
-            charIndex = Math.max(0, Math.min(chars.length - 1, charIndex));
-
-            if (charIndex > 0) {
-                // 1. Luminosité plus douce : de 25% (sombre) à 55% max (cyan pur, sans devenir blanc)
-                let lightness = 60 + (normalizedZ * 30); 
-                
-                // 2. Application de la couleur HSL
-                ctx.fillStyle = `hsl(0, 0%, ${lightness}%)`;
-
-                // 3. Opacité harmonisée : de 15% à 70% max (évite le côté trop "solide" des crêtes)
-                ctx.globalAlpha = normalizedZ * 0.55 + 0.15; 
-                
-                ctx.fillText(chars[charIndex], i * fontSize + fontSize / 2, j * fontSize + fontSize / 2);
+let myModel;
+const loader = new THREE.GLTFLoader();
+loader.load(
+    'chemin/vers/ton/modele.gltf', // Remplace par ton fichier
+    function (gltf) {
+        myModel = gltf.scene;
+        // Optionnel : ajuster la taille et la position
+        myModel.scale.set(10, 10, 10); 
+        myModel.position.set(0, 0, 0);
+        
+        // Appliquer un matériau qui réagit bien à la lumière sur toutes les parties du modèle
+        myModel.traverse((child) => {
+            if (child.isMesh) {
+                child.material = new THREE.MeshPhongMaterial({ color: 0xffffff });
             }
-        }
+        });
+        scene.add(myModel);
     }
-    
-    ctx.globalAlpha = 1.0;
+);
+*/
+
+// 5. ANIMATION
+function animate() {
     requestAnimationFrame(animate);
+
+    const time = Date.now() * 0.0005;
+
+    // On fait tourner la forme de test
+    if (torusKnot) {
+        torusKnot.rotation.x = time;
+        torusKnot.rotation.y = time * 0.5;
+    }
+
+    // On fait tourner la lumière pour rendre l'ASCII dynamique
+    pointLight1.position.x = Math.sin(time * 0.7) * 100;
+    pointLight1.position.z = Math.cos(time * 0.3) * 100;
+
+    // Rendu via l'AsciiEffect (et non le renderer classique)
+    effect.render(scene, camera);
 }
 
-// Lancement de l'animation
-if (canvas) {
-    animate();
-}
+// 6. RESPONSIVE
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    effect.setSize(window.innerWidth, window.innerHeight);
+});
+
+animate();
