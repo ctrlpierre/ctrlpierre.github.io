@@ -1,86 +1,121 @@
-// 1. INITIALISATION CLASSIQUE THREE.JS
+// ================================================
+// 1. INITIALISATION DE LA SCÈNE THREE.JS
+// ================================================
 const scene = new THREE.Scene();
+// On recule un peu la caméra pour avoir une vue d'ensemble en "portrait"
 const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.z = 50;
+camera.position.z = 25; 
 
-const renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
+const renderer = new THREE.WebGLRenderer({ alpha: true });
 
-// 2. LA MAGIE : L'EFFET ASCII
-// On passe le renderer, les caractères (du plus sombre au plus clair) et les options
-const effect = new THREE.AsciiEffect(renderer, ' ·×÷=∫∑∆πγβ', { invert: true, resolution: 0.2 });
+// ================================================
+// 2. L'EFFET ASCII (Ton style Cyan Tech)
+// ================================================
+// Caractères du plus sombre au plus clair
+const effect = new THREE.AsciiEffect(renderer, ' ..#+*=%@#', { invert: false, resolution: 0.2 });
 effect.setSize(window.innerWidth, window.innerHeight);
-
-// On applique nos styles au container généré
 effect.domElement.id = 'ascii-container';
-effect.domElement.style.color = '#ffffffff'; // Ton cyan
-effect.domElement.style.backgroundColor = '#050505'; // Fond noir
-document.body.appendChild(effect.domElement); // On l'ajoute au HTML
+effect.domElement.style.color = '#696969ff'; 
+effect.domElement.style.backgroundColor = '#050505'; 
+document.body.appendChild(effect.domElement); 
 
-// 3. LA LUMIÈRE (Crucial pour créer les contrastes clairs/foncés)
-const pointLight1 = new THREE.PointLight(0xffffff, 1);
-pointLight1.position.set(100, 100, 100);
-scene.add(pointLight1);
+// ================================================
+// 3. L'ÉCLAIRAGE (Crucial pour les volumes de la TD3)
+// ================================================
+// Lumière principale venant d'en haut à droite pour sculpter les boutons
+const mainLight = new THREE.PointLight(0xffffff, 1.5);
+mainLight.position.set(50, 50, 50);
+scene.add(mainLight);
 
-const pointLight2 = new THREE.PointLight(0xffffff, 0.5);
-pointLight2.position.set(-100, -100, -100);
-scene.add(pointLight2);
+// Lumière de débouchage venant du bas pour éviter les zones trop noires
+const fillLight = new THREE.PointLight(0xffffff, 0.5);
+fillLight.position.set(-50, -30, 20);
+scene.add(fillLight);
 
-// 4. L'OBJET 3D (Pour tester immédiatement)
-// On crée un nœud mathématique complexe
-const geometry = new THREE.TorusKnotGeometry(15, 4, 100, 16);
-// Le matériau doit réagir à la lumière (Phong ou Standard)
-const material = new THREE.MeshPhongMaterial({ color: 0xffffff }); 
-const torusKnot = new THREE.Mesh(geometry, material);
-scene.add(torusKnot);
-
-/* // =========================================================
-// POUR CHARGER TON PROPRE MODÈLE (.gltf ou .glb) PLUS TARD :
-// Décommente ce bloc et commente le TorusKnot au-dessus !
-// =========================================================
-
+// ================================================
+// 4. CHARGEMENT ET CONFIGURATION DU MODÈLE TD3
+// ================================================
 let myModel;
+// Variables pour ajuster la position initiale (à modifier si besoin !)
+const initialX = 25;  // Commence un peu plus a droite
+const initialY = 40;  // Commence un peu plus haut dans la page
+const initialScale = 11; // Taille globale
+
 const loader = new THREE.GLTFLoader();
 loader.load(
-    'chemin/vers/ton/modele.gltf', // Remplace par ton fichier
+    './td3.glb', // Assure-toi que le fichier est bien là !
     function (gltf) {
         myModel = gltf.scene;
-        // Optionnel : ajuster la taille et la position
-        myModel.scale.set(10, 10, 10); 
-        myModel.position.set(0, 0, 0);
         
-        // Appliquer un matériau qui réagit bien à la lumière sur toutes les parties du modèle
+        // --- AJUSTEMENTS CRUCIAUX POUR LE MODE PORTRAIT ---
+
+        // A. TAILLE : On agrandit le modèle pour qu'il soit imposant
+        myModel.scale.set(initialScale, initialScale, initialScale); 
+
+        // B. ORIENTATION "PORTRAIT" : On le redresse !
+        // Math.PI / 2 le mettrait parfaitement vertical (plat face caméra).
+        // Math.PI / 2.2 l'incline très légèrement vers le haut pour un meilleur angle de vue sur les potards.
+        myModel.rotation.x = Math.PI / 1.8;
+        myModel.rotation.y = Math.PI / 2;
+        
+        // C. POSITION INITIALE : On le place en haut de l'écran au début
+        myModel.position.set(initialX, initialY, 0);
+
+        // D. MATÉRIAU : On applique le matériau blanc pour que l'ASCII fonctionne
         myModel.traverse((child) => {
             if (child.isMesh) {
-                child.material = new THREE.MeshPhongMaterial({ color: 0xffffff });
+                child.material = new THREE.MeshPhongMaterial({ 
+                    color: 0xffffff,
+                    shininess: 100 // Rend les boutons un peu plus brillants en ASCII
+                });
             }
         });
         scene.add(myModel);
     }
 );
-*/
 
-// 5. ANIMATION
+// ================================================
+// 5. GESTION DU SCROLL FLUIDE (Smooth Scrolling)
+// ================================================
+let scrollY = window.scrollY;
+let currentScroll = window.scrollY; 
+
+window.addEventListener('scroll', () => {
+    scrollY = window.scrollY;
+});
+
+// ================================================
+// 6. BOUCLE D'ANIMATION PRINCIPALE
+// ================================================
 function animate() {
     requestAnimationFrame(animate);
-
     const time = Date.now() * 0.0005;
 
-    // On fait tourner la forme de test
-    if (torusKnot) {
-        torusKnot.rotation.x = time;
-        torusKnot.rotation.y = time * 0.5;
+    // Lissage mathématique du scroll (Lerp) pour éviter les saccades
+    currentScroll += (scrollY - currentScroll) * 0.07; 
+
+    if (myModel) {
+        // --- C'EST ICI QUE SE JOUE LE DÉFILEMENT ---
+        
+        // La position Y actuelle = Position de départ - (Scroll * vitesse)
+        // Plus le multiplicateur (0.06) est élevé, plus ça descend vite.
+        myModel.position.y = initialY - (currentScroll * 0.02);
+
+        // OPTIONNEL : Une très légère rotation lente permanente pour que 
+        // l'ASCII "chatouille" et ne paraisse pas figé.
+        myModel.rotation.z = -0.3 + Math.sin(time * 0.5) * 0.2;
     }
 
-    // On fait tourner la lumière pour rendre l'ASCII dynamique
-    pointLight1.position.x = Math.sin(time * 0.7) * 100;
-    pointLight1.position.z = Math.cos(time * 0.3) * 100;
+    // On bouge un peu la lumière principale pour rendre l'effet vivant
+    mainLight.position.x = Math.sin(time * 1.5 + 10) * 50;
+    mainLight.position.z = 60 + Math.cos(time * 0.8 + 10) * 35;
 
-    // Rendu via l'AsciiEffect (et non le renderer classique)
     effect.render(scene, camera);
 }
 
-// 6. RESPONSIVE
+// ================================================
+// 7. RESPONSIVE (Redimensionnement de la fenêtre)
+// ================================================
 window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
