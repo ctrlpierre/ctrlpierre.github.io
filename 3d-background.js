@@ -16,7 +16,7 @@ const effect = new THREE.AsciiEffect(renderer, ' ¨.+*&=%@#', { invert: false, r
 effect.setSize(window.innerWidth, window.innerHeight);
 effect.domElement.id = 'ascii-container';
 effect.domElement.style.color = '#c2c2c2ff'; 
-effect.domElement.style.backgroundColor = '#050505'; 
+effect.domElement.style.backgroundColor = 'transparent';
 document.body.appendChild(effect.domElement); 
 
 // ================================================

@@ -167,7 +167,7 @@ textarea {
   width: 92%; }
 
 .btn {
-  background: #bdbdbd;
+  background: #868686;
   color: #333;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -974,4 +974,64 @@ h6,
   .projects__row {
     margin-bottom: 4rem !important;
   }
+}
+
+/* 1. Modifie le conteneur ASCII existant pour enlever le fond noir */
+#ascii-container {
+    /* ... tes autres propriétés existantes ... */
+    background-color: transparent !important; /* Modifié ici */
+}
+
+/* ==========================================================================
+   HALOS DE LUMIÈRE EN ARRIÈRE-PLAN
+   ========================================================================== */
+.background-halos {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #050505; /* On replace ton fond noir global ici */
+    z-index: -2; /* Derrière le canvas ASCII qui est à -1 */
+    overflow: hidden;
+    pointer-events: none;
+}
+
+/* Base du halo */
+.halo {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.8;
+    /* Adoucit légèrement le rendu pour que le scroll paraisse ultra fluide */
+    transition: transform 0.1s ease-out; 
+    /* Optimisation des performances pour le navigateur */
+    will-change: transform, background; 
+}
+
+/* Halo supérieur (récupère les variables --h1) */
+.halo-1 {
+    top: -10%;
+    left: -30%;
+    width: 45vw;
+    height: 45vw;
+    /* hsla(Teinte, Saturation, Luminosité, Opacité) */
+    background: radial-gradient(circle, hsla(var(--h1-hue, 220), 100%, 40%, 0.7) 0%, rgba(0, 0, 0, 0) 75%);
+    transform: translate(var(--h1-x, 0vw), var(--h1-y, 0vh));
+}
+
+/* Halo inférieur (récupère les variables --h2) */
+.halo-2 {
+    top: 50%;
+    left: -25%;
+    width: 50vw;
+    height: 65vw;
+    background: radial-gradient(circle, hsla(var(--h2-hue, 185), 100%, 35%, 0.5) 0%, rgba(0, 0, 0, 0) 75%);
+    transform: translate(var(--h2-x, 0vw), var(--h2-y, 0vh));
+}
+
+/* Petite animation de respiration / flottement */
+@keyframes floatHalo {
+    0% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+    100% { transform: translate(5%, 3%) scale(1.1); opacity: 0.6; }
 }
