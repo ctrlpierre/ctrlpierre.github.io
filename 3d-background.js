@@ -12,10 +12,10 @@ const renderer = new THREE.WebGLRenderer({ alpha: true });
 // 2. L'EFFET ASCII (Ton style Cyan Tech)
 // ================================================
 // Caractères du plus sombre au plus clair
-const effect = new THREE.AsciiEffect(renderer, ' ¨.+*&=%@#', { invert: false, resolution: 0.2 });
+const effect = new THREE.AsciiEffect(renderer, ' ¨.+.&=%@#', { invert: false, resolution: 0.2 });
 effect.setSize(window.innerWidth, window.innerHeight);
 effect.domElement.id = 'ascii-container';
-effect.domElement.style.color = '#c2c2c2ff'; 
+effect.domElement.style.color = 'rgba(255, 255, 255, 0.25)'; 
 effect.domElement.style.backgroundColor = 'transparent';
 document.body.appendChild(effect.domElement); 
 
@@ -114,7 +114,7 @@ function animate() {
     // mais on ajoute "lightScrollOffset" pour faire tourner les ombres quand tu descends.
     // (On garde le "time" pour que la lumière "respire" un peu même quand on ne scrolle pas).
     mainLight.position.x = -70 + Math.sin(time * 0.8 + lightScrollOffset) * 50;
-    mainLight.position.z = 30 + Math.cos(time * 0.5 + lightScrollOffset) * 35;
+    mainLight.position.z = 50 + Math.cos(time * 0.5 + lightScrollOffset) * 10;
     mainLight.position.y = 50 - (currentScroll * 0.015);
 
     effect.render(scene, camera);
