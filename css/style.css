@@ -942,3 +942,36 @@ h6,
 .about__content-details-para {
   margin-left: 0 !important;
 }
+
+/* ==========================================================================
+   RÉDUCTION DES ESPACES - SECTION PROJETS
+   ========================================================================== */
+
+/* 1. Réduit l'espace géant entre le grand titre et le premier projet */
+.projects .heading-sec__mb-bg {
+  margin-bottom: 5rem !important; /* Au lieu des 11rem de base */
+}
+
+/* 2. Réduit l'écart entre chaque projet (ex: entre le projet IRIT et la Fonction Gamma) */
+.projects__row {
+  margin-bottom: 5rem !important; /* Au lieu des 11rem de base */
+}
+
+/* 3. Réduit légèrement l'espacement interne (titre du projet -> texte -> bouton) */
+.projects__row-content-title {
+  margin-bottom: 1rem !important; /* Au lieu de 2rem */
+}
+
+.projects__row-content-desc {
+  margin-bottom: 2rem !important; /* Au lieu de 3rem */
+}
+
+/* 4. On ajuste aussi pour la version mobile (écrans plus petits) */
+@media only screen and (max-width: 56.25em) {
+  .projects .heading-sec__mb-bg {
+    margin-bottom: 4rem !important; 
+  }
+  .projects__row {
+    margin-bottom: 4rem !important;
+  }
+}
