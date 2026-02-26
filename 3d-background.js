@@ -4,7 +4,7 @@
 const scene = new THREE.Scene();
 // On recule un peu la caméra pour avoir une vue d'ensemble en "portrait"
 const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.z = 25; 
+camera.position.z = 30; 
 
 const renderer = new THREE.WebGLRenderer({ alpha: true });
 
@@ -12,10 +12,10 @@ const renderer = new THREE.WebGLRenderer({ alpha: true });
 // 2. L'EFFET ASCII (Ton style Cyan Tech)
 // ================================================
 // Caractères du plus sombre au plus clair
-const effect = new THREE.AsciiEffect(renderer, ' ..#+*=%@#', { invert: false, resolution: 0.2 });
+const effect = new THREE.AsciiEffect(renderer, ' ¨.+*&=%@#', { invert: false, resolution: 0.25 });
 effect.setSize(window.innerWidth, window.innerHeight);
 effect.domElement.id = 'ascii-container';
-effect.domElement.style.color = '#696969ff'; 
+effect.domElement.style.color = '#dbdbdbff'; 
 effect.domElement.style.backgroundColor = '#050505'; 
 document.body.appendChild(effect.domElement); 
 
@@ -32,14 +32,16 @@ const fillLight = new THREE.PointLight(0xffffff, 0.5);
 fillLight.position.set(-50, -30, 20);
 scene.add(fillLight);
 
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+
 // ================================================
 // 4. CHARGEMENT ET CONFIGURATION DU MODÈLE TD3
 // ================================================
 let myModel;
 // Variables pour ajuster la position initiale (à modifier si besoin !)
-const initialX = 25;  // Commence un peu plus a droite
-const initialY = 40;  // Commence un peu plus haut dans la page
-const initialScale = 11; // Taille globale
+const initialX = 30;  // Commence un peu plus a droite
+const initialY = 50;  // Commence un peu plus haut dans la page
+const initialScale = 14; // Taille globale
 
 const loader = new THREE.GLTFLoader();
 loader.load(
@@ -92,23 +94,28 @@ function animate() {
     const time = Date.now() * 0.0005;
 
     // Lissage mathématique du scroll (Lerp) pour éviter les saccades
-    currentScroll += (scrollY - currentScroll) * 0.07; 
+    currentScroll += (scrollY - currentScroll) * 0.4; 
 
     if (myModel) {
         // --- C'EST ICI QUE SE JOUE LE DÉFILEMENT ---
         
         // La position Y actuelle = Position de départ - (Scroll * vitesse)
         // Plus le multiplicateur (0.06) est élevé, plus ça descend vite.
-        myModel.position.y = initialY - (currentScroll * 0.02);
+        myModel.position.y = -initialY + (currentScroll * 0.033);
 
         // OPTIONNEL : Une très légère rotation lente permanente pour que 
         // l'ASCII "chatouille" et ne paraisse pas figé.
-        myModel.rotation.z = -0.3 + Math.sin(time * 0.5) * 0.2;
+        myModel.rotation.z = -0.3 + Math.sin(time * 0.5) * 0.1;
     }
 
-    // On bouge un peu la lumière principale pour rendre l'effet vivant
-    mainLight.position.x = Math.sin(time * 1.5 + 10) * 50;
-    mainLight.position.z = 60 + Math.cos(time * 0.8 + 10) * 35;
+    const lightScrollOffset = currentScroll * 0.0007; 
+
+    // On garde exactement tes mathématiques et tes distances pour conserver le rendu que tu aimes, 
+    // mais on ajoute "lightScrollOffset" pour faire tourner les ombres quand tu descends.
+    // (On garde le "time" pour que la lumière "respire" un peu même quand on ne scrolle pas).
+    mainLight.position.x = -70 + Math.sin(time * 0.8 + lightScrollOffset) * 50;
+    mainLight.position.z = 30 + Math.cos(time * 0.5 + lightScrollOffset) * 35;
+    mainLight.position.y = 50 - (currentScroll * 0.015);
 
     effect.render(scene, camera);
 }

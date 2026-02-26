@@ -132,7 +132,7 @@ textarea {
     top: calc(100% + 1.5rem);
     height: 5px;
     width: 3rem;
-    background: #0062b9;
+    background: #545454;
     left: 50%;
     transform: translateX(-50%);
     border-radius: 5px; }
@@ -166,7 +166,7 @@ textarea {
   width: 92%; }
 
 .btn {
-  background: #fff;
+  background: #bdbdbd;
   color: #333;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -184,12 +184,12 @@ textarea {
     padding: 1.5rem 5rem;
     font-size: 1.6rem; }
   .btn--theme {
-    background: #0062b9;
+    background: #545454;
     color: #fff; }
   .btn--theme-inv {
-    color: #0062b9;
+    color: #545454;
     background: #fff;
-    border: 2px solid #0062b9;
+    border: 2px solid #545454;
     box-shadow: none;
     padding: calc(1.5rem - 2px) calc(5rem - 2px); }
 
@@ -544,14 +544,14 @@ textarea {
     color: #333;
     transition: color .3s; }
     .header__logo-container:hover {
-      color: #0062b9; }
+      color: #545454; }
   .header__logo-img-cont {
     width: 5rem;
     height: 5rem;
     border-radius: 50px;
     overflow: hidden;
     margin-right: 1.5rem;
-    background: #0062b9; }
+    background: #545454; }
     @media only screen and (max-width: 56.25em) {
       .header__logo-img-cont {
         width: 4.5rem;
@@ -583,7 +583,7 @@ textarea {
     font-weight: 700;
     transition: color .3s; }
     .header__link:hover {
-      color: #0062b9; }
+      color: #545454; }
     @media only screen and (max-width: 56.25em) {
       .header__link {
         padding: 3rem 1.8rem;
@@ -630,7 +630,7 @@ textarea {
     letter-spacing: 2px;
     transition: color .3s; }
     .header__sm-menu-link a:hover {
-      color: #0062b9; }
+      color: #545454; }
   .header__sm-menu-link:first-child a {
     border-top: 1px solid #eee; }
   .header__sm-menu-link-last {
@@ -741,6 +741,9 @@ textarea {
     z-index: -1;
     pointer-events: none;
     background-color: #050505;
+    overflow: hidden; /* Coupe ce qui dépasse du texte, mais garantit le cadre */
+    margin: 0;
+    padding: 0;
 }
 
 /* ==========================================================================
@@ -770,7 +773,7 @@ footer,
 .contact__form-container {
     background-color: rgba(0, 0, 0, 0.2) !important; /* Un noir très léger pour garder la lisibilité sans cacher la 3D */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important; /* Ombre douce */
-    border: 1px solid rgba(255, 255, 255, 0.1); /* Bordure subtile pour délimiter */
+    border: none; /* Bordure subtile pour délimiter */
     border-radius: 10px;
 }
 
@@ -832,4 +835,31 @@ h6,
     background-color: rgba(255, 255, 255, 0.1) !important;
     color: #ffffff !important;
     border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Gère l'alignement horizontal du nom et des icônes */
+.header__brand {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem; /* Espace entre ton nom et la première icône */
+}
+
+/* Gère l'espacement entre les icônes elles-mêmes */
+.header__socials {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem; 
+}
+
+/* Adapte la taille des images au menu et ajoute une transition */
+.header__social-icon {
+  width: 2.5rem;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  display: block;
+}
+
+/* Petit effet sympa au survol */
+.header__social-icon:hover {
+  transform: translateY(-3px);
+  opacity: 0.8;
 }
