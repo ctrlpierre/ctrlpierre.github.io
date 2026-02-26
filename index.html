@@ -33,7 +33,6 @@
             <li class="header__link-wrapper"><a href="./index.html" class="header__link"> Menu </a></li>
             <li class="header__link-wrapper"><a href="./index.html#about" class="header__link"> À propos </a></li>
             <li class="header__link-wrapper"><a href="./index.html#projects" class="header__link"> Projets </a></li>
-            <li class="header__link-wrapper"><a href="./index.html#contact" class="header__link"> Contact </a></li>
           </ul>
           <div class="header__main-ham-menu-cont">
             <img src="./assets/svg/ham-menu.svg" alt="hamburger menu" class="header__main-ham-menu" />
@@ -47,7 +46,6 @@
             <li class="header__sm-menu-link"><a href="./index.html"> Menu </a></li>
             <li class="header__sm-menu-link"><a href="./index.html#about"> À propos </a></li>
             <li class="header__sm-menu-link"><a href="./index.html#projects"> Projets </a></li>
-            <li class="header__sm-menu-link"><a href="./index.html#contact"> Contact </a></li>
           </ul>
         </div>
       </div>
@@ -86,30 +84,46 @@
             <h3 class="about__content-title">Mon parcours et mes objectifs</h3>
             <div class="about__content-details">
               <p class="about__content-details-para">
-                Je suis <strong>Pierre Parodi</strong>, actuellement étudiant en L3 Double Licence Mathématiques & Informatique à l'Université Paul Sabatier. 
-                J'ai fait le choix d'un cursus exigeant pour bâtir un socle scientifique solide afin de me préparer à une carrière d'ingénieur spécialisé.
+                Allier l’exigence des mathématiques appliquées à la puissance de l’informatique : c’est ce qui a dicté
+                mon choix de <strong>double licence Mathématiques-Informatique</strong>. </br></br>
               </p>
               <p class="about__content-details-para">
-                Mon grand intérêt pour la musique électronique est un moteur important. Pratiquant la composition et le sound design (MAO), <strong>je lie constamment approche artistique et scientifique</strong>. C'est ce qui me pousse aujourd'hui à candidater pour intégrer le département Sciences du Numérique (parcours Image & Multimédia) de <strong>l'ENSEEIHT</strong>.
+                C’est ce qui me pousse aujourd’hui à vouloir mettre ces compétences au service de mon intérêt 
+                pour <strong>le son et le multimédia en général</strong>, en développant les outils de création et de modélisation de demain. </br></br>
+              </p>
+              <p class="about__content-details-para">
+                Pratiquant la composition et le sound design (MAO), je lie constamment approche <strong>artistique et scientifique</strong>. </br>
               </p>
             </div>
-            <a href="./#contact" class="btn btn--med btn--theme dynamicBgClr">Me Contacter</a>
           </div>
           <div class="about__content-skills">
-            <h3 class="about__content-title">Mes Compétences</h3>
+            <h3 class="about__content-title">Langages & Outils</h3>
             <div class="skills">
-              <div class="skills__skill">Python & PyO</div>
-              <div class="skills__skill">C / C++</div>
+              <div class="skills__skill">Python</div>
+              <div class="skills__skill">C</div>
               <div class="skills__skill">Java</div>
-              <div class="skills__skill">Traitement du Signal (DSP)</div>
-              <div class="skills__skill">Intelligence Artificielle</div>
-              <div class="skills__skill">Mathématiques Appliquées</div>
-              <div class="skills__skill">Git / GitHub</div>
+              <div class="skills__skill">Assembly x64</div>
+              <div class="skills__skill">OCaml & ROCQ</div>
+              <div class="skills__skill">Git</div>
               <div class="skills__skill">LaTeX</div>
               <div class="skills__skill">Unix</div>
+              <div class="skills__skill">SQL & VBA</div>
+              <div class="skills__skill">GMAO</div>
+            </div>
+            <h3 class="about__content-title">Matières Clés</h3>
+            <div class="skills">
+              <div class="skills__skill">Analyse</div>
+              <div class="skills__skill">Algèbre Linéaire</div>
+              <div class="skills__skill">Probas</div>
+              <div class="skills__skill">IA</div>
+              <div class="skills__skill">Stats Inférentielles</div>
+              <div class="skills__skill">Complexité & Algorithmique</div>
+              <div class="skills__skill">Système & Réseaux</div>
+            </div>
+            <h3 class="about__content-title">Centres d'Intérêt</h3>
+            <div class="skills">
               <div class="skills__skill">MAO (FL Studio)</div>
-              <div class="skills__skill">Sound Design (Serum)</div>
-              <div class="skills__skill">VBA & SQL</div>
+              <div class="skills__skill">Sound Design</div>
             </div>
           </div>
         </div>
@@ -128,30 +142,22 @@
         <div class="projects__content">
           <div class="projects__row">
             <div class="projects__row-content">
-              <h3 class="projects__row-content-title">1. Synthèse Inverse Audio (Stage de Recherche - IRIT)</h3>
+              <h3 class="projects__row-content-title">Synthèse Audio Inverse (Stage de Recherche - IRIT)</h3>
               <p class="projects__row-content-desc">
-                Mêlant réseaux de neurones et traitement du signal, je conçois un prototype analysant un signal audio pour en déduire les paramètres de synthèse et le reproduire. Ce projet me plonge au cœur des problématiques actuelles de l'audio numérique.
+                Tandis que l’IA tend aujourd'hui vers la génération audio directe, ce projet propose une approche alternative - un outil capable de traduire un son existant en un patch de synthétiseur. L’enjeu est de restituer le contrôle à l’artiste, lui permettant de modeler ses sonorités pour préserver sa liberté créative.
               </p>
-              <a href="./project-1.html" class="btn btn--med btn--theme dynamicBgClr">Voir le projet</a>
+              <a href="https://github.com/ctrlpierre/synth-param-inference" class="btn btn--med btn--theme dynamicBgClr">Voir le projet</a>
             </div>
           </div>
           <div class="projects__row">
             <div class="projects__row-content">
-              <h3 class="projects__row-content-title">2. Étude Approfondie des Fonctions Gamma & Bêta</h3>
+              <h3 class="projects__row-content-title">Étude Approfondie des Fonctions Gamma & Bêta</h3>
               <p class="projects__row-content-desc">
-                Analyse théorique poussée : définitions intégrales, prolongement analytique et démonstration de théorèmes fondamentaux. Rédaction d'un rapport scientifique de 40 pages en LaTeX.
+                Analyse théorique poussée de fonctions spéciales : définitions intégrales, prolongement analytique, démonstration de théorèmes fondamentaux, différentes applications et rédaction d'un rapport scientifique de 40 pages en LaTeX. Ce projet est un travail de groupe réalisé avec Bastien Babu et Jérémy Claux.
               </p>
-              <a href="./project-2.html" class="btn btn--med btn--theme dynamicBgClr">Voir le projet</a>
+              <a href="Exploration des fonctions Gamma et Bêta.pdf" class="btn btn--med btn--theme dynamicBgClr">Voir le projet</a>
             </div>
           </div>
-          <div class="projects__row">
-            <div class="projects__row-content">
-              <h3 class="projects__row-content-title">3. Automatisation & GMAO (ARIA Électronique)</h3>
-              <p class="projects__row-content-desc">
-                Trois étés consécutifs en tant qu'assistant technique. Missions de développement sous VBA, maintenance de bases de données et contrôle qualité, prouvant ma capacité d'adaptation en environnement industriel.
-              </p>
-              <a href="./project-3.html" class="btn btn--med btn--theme dynamicBgClr">Voir le projet</a>
-            </div>
           </div>
         </div>
       </div>
@@ -174,7 +180,8 @@
           <div class="main-footer__row main-footer__row-2">
             <h4 class="heading heading-sm text-lt">Pierre Parodi</h4>
             <p class="main-footer__short-desc">
-              Élève Ingénieur en Traitement du Signal & Intelligence Artificielle. Passionné d'audio numérique.
+              Étudiant en L3 de Double Licence Mathématiques-Informatique. Passionné d'audio numérique.
+            </br><em>Toulouse, France</em>
             </p>
           </div>
         </div>

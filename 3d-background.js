@@ -12,10 +12,10 @@ const renderer = new THREE.WebGLRenderer({ alpha: true });
 // 2. L'EFFET ASCII (Ton style Cyan Tech)
 // ================================================
 // Caractères du plus sombre au plus clair
-const effect = new THREE.AsciiEffect(renderer, ' ¨.+*&=%@#', { invert: false, resolution: 0.25 });
+const effect = new THREE.AsciiEffect(renderer, ' ¨.+*&=%@#', { invert: false, resolution: 0.2 });
 effect.setSize(window.innerWidth, window.innerHeight);
 effect.domElement.id = 'ascii-container';
-effect.domElement.style.color = '#dbdbdbff'; 
+effect.domElement.style.color = '#c2c2c2ff'; 
 effect.domElement.style.backgroundColor = '#050505'; 
 document.body.appendChild(effect.domElement); 
 

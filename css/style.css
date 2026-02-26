@@ -92,6 +92,7 @@ textarea {
       font-size: 4.5rem; } }
 
 .heading-ter {
+  margin-top: 2rem;
   font-size: 1.5rem;
   text-transform: uppercase;
   letter-spacing: 3px;
@@ -202,7 +203,7 @@ textarea {
 .text-primary {
   color: #fff;
   font-size: 2.2rem;
-  text-align: center;
+  text-align: left;
   width: 100%;
   line-height: 1.6; }
   @media only screen and (max-width: 37.5em) {
@@ -269,11 +270,12 @@ textarea {
         position: static;
         transform: translate(0, 0); } }
   .home-hero__info {
-    margin: 3rem auto 0 auto;
+    margin: 0;
+    margin-top: 4rem;
     max-width: 80rem; }
   .home-hero__cta {
     margin-top: 5rem;
-    text-align: center; }
+    text-align: left; }
 
 .about {
   background: #fafafa; }
@@ -288,7 +290,8 @@ textarea {
     .about__content-title {
       font-weight: 700;
       font-size: 2.8rem;
-      margin-bottom: 3rem; }
+      margin-top: 1rem;
+      margin-bottom: 2rem; }
       @media only screen and (max-width: 37.5em) {
         .about__content-title {
           font-size: 2.4rem; } }
@@ -692,12 +695,12 @@ textarea {
   display: flex;
   flex-wrap: wrap; }
   .skills__skill {
-    padding: 1rem 2rem;
+    padding: 0.6rem 1rem;
     margin-bottom: 1.5rem;
-    margin-right: 1.5rem;
-    font-size: 1.6rem;
+    margin-right: 1rem;
+    font-size: 1.3rem;
     background: rgba(153, 153, 153, 0.2);
-    border-radius: 5px;
+    border-radius: 15px;
     font-weight: 600;
     color: #777; }
 
@@ -744,6 +747,13 @@ textarea {
     overflow: hidden; /* Coupe ce qui dépasse du texte, mais garantit le cadre */
     margin: 0;
     padding: 0;
+
+    font-family: monospace !important; /* Laisse le navigateur choisir sa police à espacement fixe par défaut */
+    font-weight: 300 !important; /* Force une épaisseur de trait très fine */
+    -webkit-font-smoothing: antialiased !important; /* Crucial : c'est ce qui "évide" et affine le texte sur Brave/Chrome */
+    opacity: 1 !important; /* Baisse légèrement l'opacité globale pour accentuer le côté "gris discret" */
+    font-size: 14px !important; /* Verrouille la taille des caractères (ajuste cette valeur si c'est trop gros/petit) */
+    line-height: 14px !important; /* Verrouille la hauteur de chaque ligne de texte */
 }
 
 /* ==========================================================================
@@ -862,4 +872,73 @@ h6,
 .header__social-icon:hover {
   transform: translateY(-3px);
   opacity: 0.8;
+}
+
+.about,
+.projects,
+.contact,
+.main-footer {
+  transform: translateY(100px); 
+  opacity: 0;
+  transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+}
+
+/* État final : elles remontent à leur place initiale quand la classe est ajoutée */
+.about.slide-up-active,
+.projects.slide-up-active,
+.contact.slide-up-active,
+.main-footer.slide-up-active {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Réduit l'espace en bas de la section À propos */
+.about.sec-pad {
+  padding-bottom: 6rem; /* Tu peux ajuster cette valeur (ex: 2rem ou 6rem) */
+}
+
+/* Réduit l'espace en haut de la section Projets */
+.projects.sec-pad {
+  padding-top: 6rem; /* Tu peux ajuster cette valeur */
+}
+
+/* On s'assure que sur mobile, l'espace reste bien proportionné */
+@media only screen and (max-width: 56.25em) {
+  .about.sec-pad {
+    padding-bottom: 3rem;
+  }
+  .projects.sec-pad {
+    padding-top: 3rem;
+  }
+}
+
+/* ==========================================================================
+   ALIGNEMENT À GAUCHE (Textes, Titres et Boutons)
+   ========================================================================== */
+
+/* 1. Textes et bouton de la section d'accueil (Hero) */
+.heading-primary,
+.heading-secondary,
+.heading-ter,
+.text-primary,
+.home-hero__cta {
+  text-align: left !important;
+}
+
+/* 2. Titres et sous-titres de toutes les autres sections */
+.heading-sec__main,
+.heading-sec__sub {
+  text-align: left !important;
+  margin-left: 0 !important; /* Empêche le centrage automatique du sous-titre */
+}
+
+/* 3. Déplacement de la petite barre bleue sous les titres de section */
+.heading-sec__main::after {
+  left: 0 !important;
+  transform: none !important;
+}
+
+/* 4. Réajustement des marges du paragraphe dans la section À propos */
+.about__content-details-para {
+  margin-left: 0 !important;
 }

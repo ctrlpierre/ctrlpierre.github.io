@@ -36,3 +36,27 @@ const headerLogoConatiner = document.querySelector('.header__logo-container')
 headerLogoConatiner.addEventListener('click', () => {
   location.href = 'index.html'
 })
+
+// --- ANIMATION DES SECTIONS (SLIDE UP) ---
+// On sélectionne toutes les sections à animer
+const sectionsToReveal = document.querySelectorAll('.about, .projects, .contact, .main-footer');
+
+// On crée l'observateur
+const sectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    // Si la section entre dans l'écran
+    if (entry.isIntersecting) {
+      entry.target.classList.add('slide-up-active');
+    } else {
+      // Retire la classe quand on quitte la section pour rejouer l'animation au prochain passage
+      entry.target.classList.remove('slide-up-active');
+    }
+  });
+}, { 
+  threshold: 0.15
+});
+
+// On applique l'observateur à chaque section trouvée
+sectionsToReveal.forEach(section => {
+  sectionObserver.observe(section);
+});
