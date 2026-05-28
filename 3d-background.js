@@ -15,24 +15,26 @@ const renderer = new THREE.WebGLRenderer({ alpha: true });
 const effect = new THREE.AsciiEffect(renderer, ' ¨.+.&=%@#', { invert: false, resolution: 0.2 });
 effect.setSize(window.innerWidth, window.innerHeight);
 effect.domElement.id = 'ascii-container';
-effect.domElement.style.color = 'rgba(255, 255, 255, 0.25)'; 
+effect.domElement.style.color = 'rgba(0, 0, 0, 0.7)'; 
 effect.domElement.style.backgroundColor = 'transparent';
 document.body.appendChild(effect.domElement); 
 
 // ================================================
 // 3. L'ÉCLAIRAGE (Crucial pour les volumes de la TD3)
 // ================================================
-// Lumière principale venant d'en haut à droite pour sculpter les boutons
-const mainLight = new THREE.PointLight(0xffffff, 1.5);
+// Lumière principale (intensité baissée de 1.5 à 0.7)
+const mainLight = new THREE.PointLight(0xffffff, 2.0);
 mainLight.position.set(50, 50, 50);
 scene.add(mainLight);
 
-// Lumière de débouchage venant du bas pour éviter les zones trop noires
-const fillLight = new THREE.PointLight(0xffffff, 0.5);
+// Lumière de débouchage (intensité baissée de 0.5 à 0.2)
+const fillLight = new THREE.PointLight(0xffffff, 1.0);
 fillLight.position.set(-50, -30, 20);
 scene.add(fillLight);
 
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+// Lumière ambiante globale (intensité baissée de 0.4 à 0.15)
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+scene.add(ambientLight);
 
 // ================================================
 // 4. CHARGEMENT ET CONFIGURATION DU MODÈLE TD3
@@ -67,8 +69,8 @@ loader.load(
         myModel.traverse((child) => {
             if (child.isMesh) {
                 child.material = new THREE.MeshPhongMaterial({ 
-                    color: 0xffffff,
-                    shininess: 100 // Rend les boutons un peu plus brillants en ASCII
+                    color: 0x333333, // Corps très sombre
+                    shininess: 120    // Brillance très élevée pour faire ressortir les volumes
                 });
             }
         });

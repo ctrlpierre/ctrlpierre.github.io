@@ -47,11 +47,11 @@ body {
   box-sizing: border-box;
   position: relative;
   line-height: 1.5;
-  font-family: 'DM Sans', sans-serif;
   overflow-x: hidden;
   overflow-y: scroll;
-  font-family: 'DM Sans', sans-serif;
-  background-color: transparent;}
+  background-color: #7b7b7b; 
+  font-family: 'Consolas', monospace;
+}
 
 a {
   text-decoration: none;
@@ -296,7 +296,7 @@ textarea {
         .about__content-title {
           font-size: 2.4rem; } }
     .about__content-details-para {
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       color: grey;
       max-width: 60rem;
       line-height: 1.7;
@@ -353,7 +353,7 @@ textarea {
         .projects__row-content-subtitle {
           font-size: 1.8rem; } }
     .projects__row-content-desc {
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       color: grey;
       max-width: 60rem;
       line-height: 1.7;
@@ -678,7 +678,10 @@ textarea {
     font-size: 1.5rem;
     line-height: 1.7; }
   .main-footer__social-cont {
-    margin-top: 2rem; }
+    margin-top: 2rem;
+    display: flex;
+    align-items: center; 
+    gap: 1.5rem }
   .main-footer__icon {
     margin-right: 1rem;
     width: 2.5rem; }
@@ -784,15 +787,22 @@ footer,
     background: none !important;
 }
 
-/* On enlève aussi les fonds blancs des cartes/blocs s'il y en a */
 .projects__row, 
 .about__content-main, 
 .about__content-skills,
 .contact__form-container {
-    background-color: rgba(0, 0, 0, 0.2) !important; /* Un noir très léger pour garder la lisibilité sans cacher la 3D */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important; /* Ombre douce */
-    border: none; /* Bordure subtile pour délimiter */
-    border-radius: 10px;
+    /* Fond très légèrement blanc pour capter la lumière */
+    background-color: rgba(255, 255, 255, 0.05) !important; 
+    
+    /* Ombre centrée, très large (30px) et très douce (0.08 d'opacité) pour un bord estompé */
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.08) !important; 
+    
+    border: none; 
+    border-radius: 7px;
+    
+    /* Flou d'arrière-plan doublé pour un effet verre dépoli intense */
+    backdrop-filter: blur(22) !important;
+    -webkit-backdrop-filter: blur(22) !important;
 }
 
 /* 2. Passage des polices en teintes claires */
@@ -805,7 +815,7 @@ a,
 .heading-sec__sub,
 .about__content-details-para,
 .projects__row-content-desc {
-    color: #d1d5db !important; /* Gris clair agréable à lire */
+    color: #393939 !important; /* Gris clair agréable à lire */
 }
 
 h1, 
@@ -819,18 +829,18 @@ h6,
 .about__content-title,
 .projects__row-content-title,
 .header__logo-sub {
-    color: #ffffff !important; /* Blanc pur pour les titres */
+    color: #2b2b2b !important; /* Blanc pur pour les titres */
 }
 
 /* 3. Adaptation du menu de navigation */
 .header {
-    background-color: rgba(10, 10, 10, 0.8) !important; /* Menu semi-transparent */
+    background-color: rgba(83, 83, 83, 0.8) !important; /* Menu semi-transparent */
     backdrop-filter: blur(10px); /* Effet verre dépoli très moderne */
 }
 
 .header__link, 
 .header__sm-menu-link a {
-    color: #ffffff !important;
+    color: #2b2b2b !important;
 }
 
 /* 4. Adaptation du formulaire de contact */
@@ -851,7 +861,7 @@ h6,
 /* 5. Esthétique des badges de compétences (Skills) */
 .skills__skill {
     background-color: rgba(255, 255, 255, 0.1) !important;
-    color: #ffffff !important;
+    color: #2b2b2b !important;
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
@@ -874,6 +884,8 @@ h6,
   width: 2.5rem;
   transition: transform 0.3s ease, opacity 0.3s ease;
   display: block;
+  color: #000;
+  opacity: 0.5;
 }
 
 /* Petit effet sympa au survol */
@@ -999,7 +1011,7 @@ h6,
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: #050505; /* On replace ton fond noir global ici */
+    background-color: transparent; /* On replace ton fond noir global ici */
     z-index: -2; /* Derrière le canvas ASCII qui est à -1 */
     overflow: hidden;
     pointer-events: none;
@@ -1023,18 +1035,19 @@ h6,
     left: -30%;
     width: 45vw;
     height: 45vw;
-    /* hsla(Teinte, Saturation, Luminosité, Opacité) */
-    background: radial-gradient(circle, hsla(var(--h1-hue, 220), 100%, 40%, 0.7) 0%, rgba(0, 0, 0, 0) 75%);
+    /* On utilise un blanc à 40% d'opacité qui fond vers un blanc à 0% */
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 75%);
     transform: translate(var(--h1-x, 0vw), var(--h1-y, 0vh));
 }
 
-/* Halo inférieur (récupère les variables --h2) */
+/* Halo inférieur */
 .halo-2 {
     top: 50%;
     left: -25%;
     width: 50vw;
     height: 65vw;
-    background: radial-gradient(circle, hsla(var(--h2-hue, 185), 100%, 35%, 0.5) 0%, rgba(0, 0, 0, 0) 75%);
+    /* On utilise un blanc à 30% d'opacité pour qu'il soit un peu plus subtil */
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 75%);
     transform: translate(var(--h2-x, 0vw), var(--h2-y, 0vh));
 }
 
@@ -1042,4 +1055,27 @@ h6,
 @keyframes floatHalo {
     0% { transform: translate(0, 0) scale(1); opacity: 0.4; }
     100% { transform: translate(5%, 3%) scale(1.1); opacity: 0.6; }
+}
+
+/* ==========================================================================
+   COULEUR DES ICÔNES RÉSEAUX SOCIAUX
+   ========================================================================== */
+.header__social-icon,
+.main-footer__icon {
+    /* Inverse les couleurs de l'image (le noir devient blanc) */
+    filter: invert(1); 
+    
+    /* Si tu veux qu'elles soient gris clair au lieu de blanc pur, baisse l'opacité : */
+    /* opacity: 0.8; */
+}
+
+#matrix-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -3; /* Tout au fond, derrière les halos et la 3D */
+    pointer-events: none; /* Laisse passer les clics */
+    background-color: #636363;
 }
