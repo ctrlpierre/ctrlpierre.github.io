@@ -1337,3 +1337,15 @@ h6,
     opacity: 0.5;
   }
 }
+
+/* ==========================================================================
+   ANIMATION LETTRE PAR LETTRE - SECTION HERO
+   ========================================================================== */
+.hero-letter {
+    display: inline-block; /* Requis pour que "transform" fonctionne sur une lettre individuelle */
+    transition: color 0.15s ease, transform 0.15s ease !important;
+}
+
+.first-p-red {
+    color: #e74c3c !important; /* Rouge vif initial */
+}

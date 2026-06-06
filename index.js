@@ -113,3 +113,70 @@ menuLinks.forEach(link => {
     this.style.removeProperty('transform');
   });
 });
+
+// ==========================================================================
+// ANIMATION LETTRE PAR LETTRE (HERO SECTION) - CORRIGÉ POUR LE RETOUR À LA LIGNE
+// ==========================================================================
+document.addEventListener('DOMContentLoaded', () => {
+  const heroTitles = document.querySelectorAll('.home-hero .heading-primary, .home-hero .heading-secondary, .home-hero .heading-ter');
+
+  heroTitles.forEach((title, titleIndex) => {
+    // On nettoie les espaces multiples avant de découper
+    const text = title.textContent.trim().replace(/\s+/g, ' ');
+    title.textContent = ''; // On vide le conteneur du titre
+
+    // On sépare le texte par mots
+    const words = text.split(' ');
+
+    words.forEach((word, wordIndex) => {
+      // On crée un "groupe" pour chaque mot
+      const wordContainer = document.createElement('span');
+      // C'est cette ligne qui empêche le mot d'être coupé en deux au retour à la ligne
+      wordContainer.style.whiteSpace = 'nowrap'; 
+
+      for (let i = 0; i < word.length; i++) {
+        const char = word[i];
+        const span = document.createElement('span');
+        span.textContent = char;
+        span.classList.add('hero-letter');
+        
+        // On cible le tout premier caractère du premier titre (le 'P' de Pierre)
+        if (titleIndex === 0 && wordIndex === 0 && i === 0) {
+          span.classList.add('first-p-red');
+        }
+        
+        wordContainer.appendChild(span);
+      }
+
+      title.appendChild(wordContainer);
+
+      // On ajoute un vrai espace après chaque mot (sauf pour le dernier mot de la phrase)
+      if (wordIndex < words.length - 1) {
+        title.appendChild(document.createTextNode(' '));
+      }
+    });
+  });
+
+  const heroLetters = document.querySelectorAll('.hero-letter');
+  const firstP = document.querySelector('.first-p-red');
+
+  heroLetters.forEach(letter => {
+    letter.addEventListener('mouseenter', function() {
+      // Au premier survol d'une lettre, on désactive le rouge initial du P
+      if (firstP && firstP.classList.contains('first-p-red')) {
+        firstP.classList.remove('first-p-red');
+      }
+
+      // Génère une teinte aléatoire avec l'effet de saut
+      const randomHue = Math.floor(Math.random() * 360);
+      this.style.setProperty('color', `hsl(${randomHue}, 100%, 45%)`, 'important');
+      this.style.setProperty('transform', 'translateY(-2px)', 'important');
+    });
+
+    letter.addEventListener('mouseleave', function() {
+      // Retour à l'état normal
+      this.style.removeProperty('color');
+      this.style.removeProperty('transform');
+    });
+  });
+});
