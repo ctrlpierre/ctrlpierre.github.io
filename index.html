@@ -15,10 +15,6 @@
     <link rel="icon" type="image/png" href="sign_white.png" media="(prefers-color-scheme: dark)">
   <body>
     <canvas id="matrix-canvas"></canvas>
-    <div class="background-halos">
-      <div class="halo halo-1"></div>
-      <div class="halo halo-2"></div>
-    </div>
 
     <header class="header">
       <div class="header__content">
@@ -155,7 +151,10 @@
               <p class="projects__row-content-desc">
                 Tandis que l’IA tend aujourd'hui vers la génération audio directe, ce projet propose une approche alternative - un outil capable de traduire un son existant en un patch de synthétiseur. L’enjeu est de restituer le contrôle à l’artiste, lui permettant de modeler ses sonorités pour préserver sa liberté créative.
               </p>
-              <a href="https://github.com/ctrlpierre/synth-param-inference" class="btn btn--med dynamicBgClr">Voir le projet</a>
+              <div class="projects__buttons-container">
+                <a href="https://github.com/ctrlpierre/synth-param-inference" class="btn btn--med dynamicBgClr">Voir le dépôt</a>
+                <a href="Synthèse_Audio_Inverse_RAPPORT.pdf" class="btn btn--med dynamicBgClr">Voir le rapport</a>
+              </div>
             </div>
           </div>
           <div class="projects__row">
@@ -201,7 +200,6 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
     
     <script src="./3d-background.js"></script>
-    <script src="./halos-animation.js"></script>
     <script src="./index.js"></script>
     <script src="./bg-scintillement.js"></script>
   </body>

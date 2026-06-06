@@ -179,10 +179,10 @@ textarea {
   .btn:hover {
     transform: translateY(-3px); }
   .btn--bg {
-    padding: 1.5rem 8rem;
+    padding: 1.5rem 4rem;
     font-size: 2rem; }
   .btn--med {
-    padding: 1.5rem 5rem;
+    padding: 1rem 1.6rem;
     font-size: 1.6rem; }
   .btn--theme {
     background: #545454;
@@ -539,7 +539,7 @@ textarea {
   z-index: 1000;
   background: #000;
   background: #fff;
-  box-shadow: 0 10px 100px rgba(0, 0, 0, 0.1); }
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1); }
   .header__content {
     display: flex;
     align-items: center;
@@ -791,11 +791,8 @@ footer,
 .about__content-main, 
 .about__content-skills,
 .contact__form-container {
-    /* Fond très légèrement blanc pour capter la lumière */
-    background-color: rgba(255, 255, 255, 0.05) !important; 
-    
-    /* Ombre centrée, très large (30px) et très douce (0.08 d'opacité) pour un bord estompé */
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.08) !important; 
+    background-color: rgba(0, 0, 0, 0.03) !important;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.05) !important;
     
     border: none; 
     border-radius: 7px;
@@ -834,8 +831,8 @@ h6,
 
 /* 3. Adaptation du menu de navigation */
 .header {
-    background-color: rgba(83, 83, 83, 0.8) !important; /* Menu semi-transparent */
-    backdrop-filter: blur(10px); /* Effet verre dépoli très moderne */
+    background-color: rgba(255, 255, 255, 0.85) !important; /* Blanc semi-transparent au lieu de gris foncé */
+    backdrop-filter: blur(10px);
 }
 
 .header__link, 
@@ -845,24 +842,26 @@ h6,
 
 /* 4. Adaptation du formulaire de contact */
 .contact__form-label {
-    color: #ffffff !important;
+    color: #333333 !important;
 }
 
 .contact__form-input {
-    background-color: rgba(255, 255, 255, 0.05) !important;
-    color: #ffffff !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    background-color: rgba(0, 0, 0, 0.03) !important;
+    color: #333333 !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
 }
 
 .contact__form-input::placeholder {
-    color: #9ca3af !important;
+    color: #888888 !important;
 }
 
 /* 5. Esthétique des badges de compétences (Skills) */
 .skills__skill {
-    background-color: rgba(255, 255, 255, 0.1) !important;
+    background-color: rgba(0, 0, 0, 0.05) !important;
     color: #2b2b2b !important;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    cursor: pointer !important; /* Force l'apparition de la main au survol */
+    transition: background-color 0.3s ease, color 0.3s ease !important;
 }
 
 /* Gère l'alignement horizontal du nom et des icônes */
@@ -1003,70 +1002,23 @@ h6,
 }
 
 /* ==========================================================================
-   HALOS DE LUMIÈRE EN ARRIÈRE-PLAN
-   ========================================================================== */
-.background-halos {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: transparent; /* On replace ton fond noir global ici */
-    z-index: -2; /* Derrière le canvas ASCII qui est à -1 */
-    overflow: hidden;
-    pointer-events: none;
-}
-
-/* Base du halo */
-.halo {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(100px);
-    opacity: 0.8;
-    /* Adoucit légèrement le rendu pour que le scroll paraisse ultra fluide */
-    transition: transform 0.1s ease-out; 
-    /* Optimisation des performances pour le navigateur */
-    will-change: transform, background; 
-}
-
-/* Halo supérieur (récupère les variables --h1) */
-.halo-1 {
-    top: -10%;
-    left: -30%;
-    width: 45vw;
-    height: 45vw;
-    /* On utilise un blanc à 40% d'opacité qui fond vers un blanc à 0% */
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 75%);
-    transform: translate(var(--h1-x, 0vw), var(--h1-y, 0vh));
-}
-
-/* Halo inférieur */
-.halo-2 {
-    top: 50%;
-    left: -25%;
-    width: 50vw;
-    height: 65vw;
-    /* On utilise un blanc à 30% d'opacité pour qu'il soit un peu plus subtil */
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 75%);
-    transform: translate(var(--h2-x, 0vw), var(--h2-y, 0vh));
-}
-
-/* Petite animation de respiration / flottement */
-@keyframes floatHalo {
-    0% { transform: translate(0, 0) scale(1); opacity: 0.4; }
-    100% { transform: translate(5%, 3%) scale(1.1); opacity: 0.6; }
-}
-
-/* ==========================================================================
    COULEUR DES ICÔNES RÉSEAUX SOCIAUX
    ========================================================================== */
 .header__social-icon,
 .main-footer__icon {
-    /* Inverse les couleurs de l'image (le noir devient blanc) */
-    filter: invert(1); 
+    /* Force l'image à devenir noire, peu importe sa couleur de base */
+    filter: brightness(0) !important; 
     
-    /* Si tu veux qu'elles soient gris clair au lieu de blanc pur, baisse l'opacité : */
-    /* opacity: 0.8; */
+    /* On la met à 70% d'opacité pour avoir un gris foncé élégant qui matche ton texte */
+    opacity: 0.7 !important; 
+    transition: opacity 0.3s ease, transform 0.3s ease !important;
+}
+
+/* Petit effet visuel pour qu'ils deviennent 100% noirs au survol */
+.header__social-icon:hover,
+.main-footer__icon:hover {
+    opacity: 1 !important;
+    transform: translateY(-3px) !important;
 }
 
 #matrix-canvas {
@@ -1077,5 +1029,311 @@ h6,
     height: 100vh;
     z-index: -3; /* Tout au fond, derrière les halos et la 3D */
     pointer-events: none; /* Laisse passer les clics */
-    background-color: #636363;
+    background-color: #ffffff;
+}
+
+.btn {
+    background-color: #bfbfbf !important; 
+    color: #ffffff !important; 
+    border: none !important;
+    /* On ajoute "color 0.3s ease" pour que la transition du texte soit aussi fluide que le fond */
+    transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease !important; 
+}
+
+/* Fluidité de l'animation pour les liens du menu (Haut Droite) */
+.header__link {
+    /* Permet au texte de bouger et de changer de couleur en douceur (0.25 seconde) */
+    transition: transform 0.25s ease, color 0.25s ease !important;
+}
+
+/* ==========================================================================
+   COULEUR DE SÉLECTION DU TEXTE (Surlignage)
+   ========================================================================== */
+::selection {
+    background-color: #2b2b2b !important; /* Le fond de sélection devient gris foncé/noir */
+    color: #ffffff !important; /* Le texte surligné passe en blanc pour être lisible */
+}
+
+/* Version spécifique pour la compatibilité avec le navigateur Mozilla Firefox */
+::-moz-selection {
+    background-color: #2b2b2b !important;
+    color: #ffffff !important;
+}
+
+/* ==========================================================================
+   ALIGNEMENT DES BOUTONS DE PROJETS
+   ========================================================================== */
+.projects__buttons-container {
+    display: flex;
+    gap: 2.5rem; /* Crée un bel espace régulier de 2rem entre les boutons */
+    flex-wrap: wrap; /* Sécurité : si l'écran est vraiment trop petit (mobile), le deuxième bouton passera à la ligne proprement */
+}
+
+/* Sur mobile, on centre les boutons pour que ce soit plus joli */
+@media only screen and (max-width: 56.25em) {
+    .projects__buttons-container {
+        justify-content: center;
+    }
+}
+
+/* ==========================================================================
+   STYLES MOBILES RAFFINÉS — Écrans ≤ 37.5em (600px)
+   Adapte l'expérience au format poche en préservant intégralement
+   l'âme du site : typographie monospace, glassmorphism, fond matrix.
+   L'affichage desktop n'est pas affecté.
+   ========================================================================== */
+
+@media only screen and (max-width: 37.5em) {
+
+  /* ──────────────────────────────────────────────
+     CORRECTION DES BUGS DE TYPOGRAPHIE HERO
+     Les deux sous-titres héritaient par erreur de
+     font-size: 4.5rem (taille du nom principal).
+     ────────────────────────────────────────────── */
+
+  .heading-primary {
+    font-size: 3.6rem;
+    letter-spacing: 2px;
+  }
+
+  /* "Étudiant en L3..." — sous-titre clair et compact */
+  .heading-secondary {
+    font-size: 1.75rem !important;
+    letter-spacing: 1.5px;
+    margin-top: 1rem;
+  }
+
+  /* "Université de Toulouse…" — mention discrète */
+  .heading-ter {
+    font-size: 1.05rem !important;
+    letter-spacing: 2.5px;
+    margin-top: 0.8rem;
+    opacity: 0.7;
+  }
+
+  /* ──────────────────────────────────────────────
+     SECTION HÉRO — Plein écran, contenu centré
+     On restaure le comportement desktop (100vh +
+     positionnement absolu) sur mobile également.
+     ────────────────────────────────────────────── */
+
+  .home-hero {
+    height: 100vh !important;
+    min-height: 100vh !important;
+  }
+
+  .home-hero__content {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    padding: 0 !important;
+    width: 88%;
+    max-width: 88%;
+  }
+
+  .home-hero__info {
+    margin-top: 2.2rem;
+  }
+
+  .text-primary {
+    font-size: 1.5rem !important;
+    line-height: 1.75;
+  }
+
+  .home-hero__cta {
+    margin-top: 2.8rem;
+  }
+
+  /* Bouton CTA hero légèrement plus compact */
+  .btn--bg {
+    padding: 1rem 2.5rem;
+    font-size: 1.5rem;
+  }
+
+  /* ──────────────────────────────────────────────
+     HEADER — Nom + icônes + hamburger sur 375px
+     ────────────────────────────────────────────── */
+
+  .header__content {
+    padding: 0 1.8rem !important;
+  }
+
+  .header__brand {
+    gap: 1.2rem;
+  }
+
+  /* Nom légèrement réduit pour laisser la place au hamburger */
+  .header__logo-sub {
+    font-size: 1.3rem !important;
+    letter-spacing: 0.5px;
+  }
+
+  .header__social-icon {
+    width: 1.8rem !important;
+  }
+
+  .header__socials {
+    gap: 1rem;
+  }
+
+  /* Menu déroulant mobile : glassmorphism cohérent avec le header */
+  .header__sm-menu {
+    background: rgba(255, 255, 255, 0.93) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+  }
+
+  /* ──────────────────────────────────────────────
+     ESPACEMENT GÉNÉRAL DES SECTIONS
+     ────────────────────────────────────────────── */
+
+  .sec-pad {
+    padding: 5rem 0 !important;
+  }
+
+  .about.sec-pad {
+    padding-bottom: 2rem !important;
+  }
+
+  .projects.sec-pad {
+    padding-top: 2rem !important;
+  }
+
+  /* Titres et sous-titres de section */
+  .heading-sec__main {
+    font-size: 2.8rem !important;
+    margin-bottom: 2rem;
+  }
+
+  .heading-sec__sub {
+    font-size: 1.5rem !important;
+  }
+
+  /* Marges sous les en-têtes de section */
+  .heading-sec__mb-bg {
+    margin-bottom: 4rem !important;
+  }
+
+  .heading-sec__mb-med {
+    margin-bottom: 3.5rem !important;
+  }
+
+  /* ──────────────────────────────────────────────
+     SECTION À PROPOS
+     ────────────────────────────────────────────── */
+
+  .about__content {
+    grid-gap: 3rem;
+  }
+
+  /* Padding interne des cartes glassmorphism */
+  .about__content-main,
+  .about__content-skills {
+    padding: 2.2rem !important;
+  }
+
+  .about__content-title {
+    font-size: 2rem !important;
+    margin-bottom: 1.2rem;
+  }
+
+  .about__content-details-para {
+    font-size: 1.4rem !important;
+    line-height: 1.75;
+  }
+
+  /* ──────────────────────────────────────────────
+     SECTION PROJETS
+     Alignement gauche préservé : cohérence avec
+     l'esthétique éditoriale/terminal du site.
+     ────────────────────────────────────────────── */
+
+  .projects__row {
+    text-align: left !important;
+    padding: 2.2rem !important;
+    margin-bottom: 2.5rem !important;
+  }
+
+  .projects__row-content {
+    align-items: flex-start !important;
+    padding: 0;
+  }
+
+  .projects__row-content-title {
+    font-size: 1.9rem !important;
+    line-height: 1.4;
+    margin-bottom: 0.8rem !important;
+  }
+
+  .projects__row-content-subtitle {
+    font-size: 1.3rem !important;
+    margin-bottom: 1.2rem;
+  }
+
+  .projects__row-content-desc {
+    font-size: 1.4rem !important;
+    line-height: 1.7;
+    margin-bottom: 1.8rem !important;
+  }
+
+  .projects .heading-sec__mb-bg {
+    margin-bottom: 3.5rem !important;
+  }
+
+  /* Boutons alignés à gauche — comme tout le reste sur ce site */
+  .projects__buttons-container {
+    justify-content: flex-start !important;
+    gap: 1.2rem;
+  }
+
+  /* ──────────────────────────────────────────────
+     BADGES DE COMPÉTENCES
+     ────────────────────────────────────────────── */
+
+  .skills__skill {
+    font-size: 1.15rem !important;
+    padding: 0.5rem 0.9rem !important;
+    margin-bottom: 0.9rem;
+    margin-right: 0.8rem;
+  }
+
+  /* ──────────────────────────────────────────────
+     FOOTER
+     ────────────────────────────────────────────── */
+
+  .main-footer__upper {
+    padding: 4rem 0 !important;
+  }
+
+  .main-footer__row-1 {
+    margin-bottom: 3rem;
+  }
+
+  .main-footer__short-desc {
+    font-size: 1.3rem;
+    line-height: 1.7;
+  }
+
+  /* ──────────────────────────────────────────────
+     ANIMATIONS D'APPARITION
+     Amplitude réduite sur petit écran pour un
+     effet plus doux et moins saccadé.
+     ────────────────────────────────────────────── */
+
+  .about,
+  .projects,
+  .contact,
+  .main-footer {
+    transform: translateY(50px) !important;
+  }
+
+  /* ──────────────────────────────────────────────
+     FOND MATRIX — Légèrement atténué sur mobile
+     pour ne pas saturer visuellement le petit écran.
+     ────────────────────────────────────────────── */
+
+  #matrix-canvas {
+    opacity: 0.5;
+  }
 }

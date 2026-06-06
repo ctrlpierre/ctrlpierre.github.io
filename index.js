@@ -60,3 +60,56 @@ const sectionObserver = new IntersectionObserver((entries) => {
 sectionsToReveal.forEach(section => {
   sectionObserver.observe(section);
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  // On cible les éléments ayant la classe .btn OU .skills__skill
+  const interactiveElements = document.querySelectorAll('.btn, .skills__skill');
+
+  interactiveElements.forEach(element => {
+    element.addEventListener('mouseenter', function() {
+      // Génère la teinte
+      const randomHue = Math.floor(Math.random() * 360);
+      
+      // Applique la couleur de fond
+      this.style.setProperty('background-color', `hsl(${randomHue}, 100%, 50%)`, 'important');
+      
+      // Adapte la couleur du texte
+      let textLightness = (randomHue >= 40 && randomHue <= 190) ? 15 : 92;
+      this.style.setProperty('color', `hsl(${randomHue}, 100%, ${textLightness}%)`, 'important');
+    });
+
+    element.addEventListener('mouseleave', function() {
+      // Retire les couleurs pour revenir au style de base
+      this.style.removeProperty('background-color');
+      this.style.removeProperty('color');
+    });
+  });
+});
+
+// --- EFFET HOVER AVEC SAUT ET COULEUR SUR LES LIENS DU MENU ---
+const menuLinks = document.querySelectorAll('.header__link');
+
+menuLinks.forEach(link => {
+  link.addEventListener('mouseenter', function() {
+    // 1. Génère une teinte aléatoire entre 0 et 360 degrés
+    const randomHue = Math.floor(Math.random() * 360);
+    
+    // 2. Ajuste la luminosité pour garantir la lisibilité sur fond blanc
+    // Si la teinte est entre 40 (orange/jaune) et 190 (vert/cyan), on baisse la luminosité à 32%
+    // Sinon (bleu, violet, rouge), on la laisse à 45% pour un effet très électrique
+    const lightness = (randomHue >= 40 && randomHue <= 190) ? 32 : 45;
+    
+    // 3. Applique la couleur vive au texte
+    this.style.setProperty('color', `hsl(${randomHue}, 100%, ${lightness}%)`, 'important');
+    
+    // 4. Fait faire le petit saut vers le haut (5 pixels)
+    this.style.setProperty('transform', 'translateY(-1.5px)', 'important');
+  });
+
+  // Quand la souris quitte le lien
+  link.addEventListener('mouseleave', function() {
+    // On efface les styles temporaires pour revenir à l'état initial
+    this.style.removeProperty('color');
+    this.style.removeProperty('transform');
+  });
+});

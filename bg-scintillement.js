@@ -92,7 +92,7 @@ class CodeLine {
         ctx.font = fontSize + 'px Consolas, monospace';
         ctx.textAlign = 'left';
         // Utilisation d'un gris clair (rgb 165, 165, 165) modulé par l'opacité de la ligne
-        ctx.fillStyle = `rgba(140, 140, 140, ${this.opacity})`;
+        ctx.fillStyle = `rgba(180, 180, 180, ${this.opacity})`;
         
         // On tronque la chaîne pour n'afficher que les caractères "déjà écrits"
         const printedText = this.text.substring(0, Math.floor(this.visibleChars));

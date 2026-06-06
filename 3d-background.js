@@ -15,7 +15,7 @@ const renderer = new THREE.WebGLRenderer({ alpha: true });
 const effect = new THREE.AsciiEffect(renderer, ' ¨.+.&=%@#', { invert: false, resolution: 0.2 });
 effect.setSize(window.innerWidth, window.innerHeight);
 effect.domElement.id = 'ascii-container';
-effect.domElement.style.color = 'rgba(0, 0, 0, 0.38)'; 
+effect.domElement.style.color = 'rgba(0, 0, 0, 0.5)'; 
 effect.domElement.style.backgroundColor = 'transparent';
 document.body.appendChild(effect.domElement); 
 
