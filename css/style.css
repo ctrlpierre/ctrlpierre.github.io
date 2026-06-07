@@ -1349,3 +1349,26 @@ h6,
 .first-p-red {
     color: #e74c3c !important; /* Rouge vif initial */
 }
+
+/* ==========================================================================
+   CORRECTION DU DÉCALAGE DE SCROLL (HEADER FIXE)
+   ========================================================================== */
+#projects {
+    /* Décale le point d'arrêt du scroll de 100px (10rem) vers le bas, 
+       laissant ainsi la place pour que le titre apparaisse sous le header */
+    scroll-margin-top: 13rem; 
+}
+
+#about {
+    /* Décale le point d'arrêt du scroll de 100px (10rem) vers le bas, 
+       laissant ainsi la place pour que le titre apparaisse sous le header */
+    scroll-margin-top: 8rem; 
+}
+
+/* On adapte légèrement pour la version mobile si le menu est plus fin */
+@media only screen and (max-width: 37.5em) {
+    #about, 
+    #projects {
+        scroll-margin-top: 8rem;
+    }
+}
