@@ -93,7 +93,7 @@ textarea {
 
 .heading-ter {
   margin-top: 2rem;
-  font-size: 1.5rem;
+  font-size: 2rem;
   text-transform: uppercase;
   letter-spacing: 3px;
   text-align: center; }
@@ -707,7 +707,7 @@ textarea {
   flex-wrap: wrap; }
   .skills__skill {
     padding: 0.6rem 1rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 3.5rem;
     margin-right: 1rem;
     font-size: 1.3rem;
     background: rgba(153, 153, 153, 0.2);
@@ -1370,5 +1370,71 @@ h6,
     #about, 
     #projects {
         scroll-margin-top: 8rem;
+    }
+}
+
+/* ==========================================================================
+   COMPARTIMENTS FORMATION & EXPÉRIENCE - SECTION HERO (Version agrandie)
+   ========================================================================== */
+.home-hero__experience-container {
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 15rem; /* Espace horizontal augmenté (de 6rem à 7rem) */
+    margin-top: 15rem;
+}
+
+.home-hero__compartment {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem; /* Espace vertical entre le titre et les logos augmenté */
+}
+
+/* Style des petits sous-titres "Formation" et "Expérience" */
+.home-hero__compartment-title {
+    font-size: 2rem; /* Texte plus grand (passé de 1.2rem à 1.5rem) */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #777; 
+    font-weight: 700;
+    text-align: left;
+}
+
+/* Le conteneur des logos à l'intérieur de chaque compartiment */
+.home-hero__logos {
+    display: flex;
+    align-items: center;
+    gap: 3.5rem; /* Espacement entre les logos augmenté pour la lisibilité */
+}
+
+.home-hero__logo {
+    height: 9.5rem; /* Logos plus imposants (passé de 4rem à 5.5rem) */
+    width: auto;
+    object-fit: contain;
+    filter: grayscale(100%) opacity(60%);
+    transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.home-hero__logo:hover {
+    filter: grayscale(0%) opacity(100%);
+    transform: translateY(-3px);
+}
+
+/* ==========================================================================
+   ADAPTATION MOBILE DES LOGOS (Écrans ≤ 600px)
+   ========================================================================== */
+@media only screen and (max-width: 37.5em) {
+    .home-hero__experience-container {
+        flex-direction: column;
+        gap: 4rem; /* Plus d'espace entre les compartiments superposés */
+        margin-top: 4rem;
+    }
+    .home-hero__compartment-title {
+        font-size: 1.3rem; /* Un peu plus grand sur mobile aussi */
+    }
+    .home-hero__logos {
+        gap: 2.5rem;
+    }
+    .home-hero__logo {
+        height: 4.5rem; /* Logos agrandis sur téléphone (passé de 3.5rem à 4.5rem) */
     }
 }
