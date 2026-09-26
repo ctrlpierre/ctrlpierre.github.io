@@ -1438,3 +1438,24 @@ h6,
         height: 4.5rem; /* Logos agrandis sur téléphone (passé de 3.5rem à 4.5rem) */
     }
 }
+
+.home-hero {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 14rem; /* Maintient le texte sous le header */
+    
+    /* Nouvelles règles pour empêcher le chevauchement : */
+    height: auto !important; /* La section s'adapte à la taille de son contenu */
+    min-height: 100vh !important; /* Elle fera toujours au moins la taille de l'écran */
+    max-height: none !important; /* Supprime le blocage à 120rem */
+    padding-bottom: 8rem; /* Ajoute un espace de respiration avant la section suivante */
+}
+
+.home-hero__content {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    margin: 0 auto; 
+}
