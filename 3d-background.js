@@ -15,7 +15,7 @@ const renderer = new THREE.WebGLRenderer({ alpha: true });
 const effect = new THREE.AsciiEffect(renderer, ' ¨.+.&=%@#', { invert: false, resolution: 0.2 });
 effect.setSize(window.innerWidth, window.innerHeight);
 effect.domElement.id = 'ascii-container';
-effect.domElement.style.color = 'rgba(0, 0, 0, 0.5)'; 
+effect.domElement.style.color = 'rgba(0, 0, 0, 0.35)'; 
 effect.domElement.style.backgroundColor = 'transparent';
 document.body.appendChild(effect.domElement); 
 
@@ -69,7 +69,7 @@ loader.load(
         myModel.traverse((child) => {
             if (child.isMesh) {
                 child.material = new THREE.MeshPhongMaterial({ 
-                    color: 0x333333, // Corps très sombre
+                    color: 0x3F3F3F, // Corps très sombre
                     shininess: 120    // Brillance très élevée pour faire ressortir les volumes
                 });
             }

@@ -39,7 +39,7 @@ headerLogoConatiner.addEventListener('click', () => {
 
 // --- ANIMATION DES SECTIONS (SLIDE UP) ---
 // On sélectionne toutes les sections à animer
-const sectionsToReveal = document.querySelectorAll('.about, .projects, .contact, .main-footer');
+const sectionsToReveal = document.querySelectorAll('.about, .projects, .cv, .contact, .main-footer');
 
 // On crée l'observateur
 const sectionObserver = new IntersectionObserver((entries) => {

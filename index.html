@@ -37,6 +37,7 @@
             <li class="header__link-wrapper"><a href="./index.html#home" class="header__link"> Menu </a></li>
             <li class="header__link-wrapper"><a href="./index.html#about" class="header__link"> À propos </a></li>
             <li class="header__link-wrapper"><a href="./index.html#projects" class="header__link"> Projets </a></li>
+            <li class="header__link-wrapper"><a href="./index.html#cv" class="header__link"> CV </a></li>
           </ul>
           <div class="header__main-ham-menu-cont">
             <img src="./assets/svg/ham-menu.svg" alt="hamburger menu" class="header__main-ham-menu" />
@@ -50,6 +51,7 @@
             <li class="header__sm-menu-link"><a href="./index.html#home"> Menu </a></li>
             <li class="header__sm-menu-link"><a href="./index.html#about"> À propos </a></li>
             <li class="header__sm-menu-link"><a href="./index.html#projects"> Projets </a></li>
+            <li class="header__sm-menu-link"><a href="./index.html#cv"> CV </a></li>
           </ul>
         </div>
       </div>
@@ -214,6 +216,36 @@
           </div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section id="cv" class="cv sec-pad">
+      <div class="main-container">
+        
+        <div class="cv__layout">
+          
+          <!-- Colonne gauche : Texte et Bouton -->
+          <div class="cv__text-content">
+            <h2 class="heading heading-sec" style="margin-bottom: 4rem;">
+              <span class="heading-sec__main">Mon CV</span>
+              <span class="heading-sec__sub">
+                Consultez mon parcours plus en profondeur en téléchargant mon CV !
+              </span>
+            </h2>
+            
+            <a href="CV_Pierre_Parodi.pdf" download="CV_Pierre_Parodi.pdf" class="btn btn--bg dynamicBgClr">Télécharger le CV</a>
+          </div>
+
+          <!-- Colonne droite : Aperçu PDF réduit et protégé -->
+          <div class="cv__preview-container">
+            <!-- toolbar=0 cache l'interface du navigateur -->
+            <iframe src="CV_Pierre_Parodi.pdf#toolbar=0&navpanes=0&scrollbar=0" class="cv__iframe"></iframe>
+            <!-- Calque invisible pour empêcher la sélection et le clic droit -->
+            <div class="cv__overlay"></div>
+          </div>
+          
+        </div>
+        
       </div>
     </section>
 
