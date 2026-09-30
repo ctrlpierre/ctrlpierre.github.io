@@ -180,3 +180,123 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+// ==========================================================================
+// SYSTÈME DE ZOOM DU CV (MODALE & ZOOM 2)
+// ==========================================================================
+document.addEventListener('DOMContentLoaded', () => {
+  const cvContainer = document.querySelector('.cv__preview-container');
+  const cvModal = document.getElementById('cv-modal');
+  const modalImg = document.getElementById('cv-modal-img');
+  const closeModal = document.querySelector('.cv-modal__close');
+
+  if (cvContainer && cvModal) {
+    // 1. Ouvrir la modale au clic sur le conteneur du CV (Ouvre toujours en Zoom 1)
+    cvContainer.addEventListener('click', () => {
+      const cvImage = document.querySelector('.cv__image');
+      if (cvImage) {
+        modalImg.src = cvImage.src;
+        window.resetCvZoom(); // Sécurité : on remet toujours à zéro (annule aussi une animation en cours)
+        cvModal.classList.add('show');
+      }
+    });
+
+    // 2. Basculer entre Zoom 1 et Zoom 2 au clic sur l'image elle-même
+    //    -> zoom progressif, centré sur le point cliqué (comme un pincement à deux doigts)
+    let zoomFrame = null;
+    const ZOOM_DURATION = 400;  // en ms : augmente pour un zoom encore plus lent
+
+    // Courbe douce : démarre lentement, accélère un peu, puis freine longuement
+    const easeInOutCubic = (t) =>
+      t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+    // Largeur (en px) que l'image aura dans l'état demandé, selon le CSS
+    const measureWidth = (zoomed) => {
+      const saved = [modalImg.style.width, modalImg.style.maxWidth, modalImg.style.maxHeight];
+      modalImg.style.width = '';
+      modalImg.style.maxWidth = '';
+      modalImg.style.maxHeight = '';
+      modalImg.classList.toggle('zoomed-in', zoomed);
+      const w = parseFloat(getComputedStyle(modalImg).width);
+      [modalImg.style.width, modalImg.style.maxWidth, modalImg.style.maxHeight] = saved;
+      return w;
+    };
+
+    const clearInlineSizes = () => {
+      modalImg.style.width = '';
+      modalImg.style.maxWidth = '';
+      modalImg.style.maxHeight = '';
+    };
+
+    // Exposé pour être réutilisé à l'ouverture de la modale
+    window.resetCvZoom = () => {
+      cancelAnimationFrame(zoomFrame);
+      clearInlineSizes();
+      modalImg.classList.remove('zoomed-in');
+    };
+
+    modalImg.addEventListener('click', (event) => {
+      event.stopPropagation(); // Indispensable : empêche le clic de se propager au fond noir (ce qui fermerait la modale)
+
+      cancelAnimationFrame(zoomFrame);
+
+      const zoomIn = !modalImg.classList.contains('zoomed-in');
+      const clickX = event.clientX;
+      const clickY = event.clientY;
+
+      // Point cliqué, en proportion de l'image (0 à 1) : il restera sous le doigt/curseur
+      const rect = modalImg.getBoundingClientRect();
+      const fx = (clickX - rect.left) / rect.width;
+      const fy = (clickY - rect.top) / rect.height;
+
+      const startW = parseFloat(getComputedStyle(modalImg).width);
+      const endW = measureWidth(zoomIn); // remet aussi la classe (curseur) dans le bon état
+
+      // On fige les limites CSS le temps de l'animation
+      modalImg.style.maxWidth = 'none';
+      modalImg.style.maxHeight = 'none';
+      modalImg.style.width = startW + 'px';
+
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const duration = reduceMotion ? 0 : ZOOM_DURATION;
+      const t0 = performance.now();
+
+      const step = (now) => {
+        const t = duration === 0 ? 1 : Math.min((now - t0) / duration, 1);
+        const w = startW + (endW - startW) * easeInOutCubic(t);
+        modalImg.style.width = w + 'px';
+
+        // Garde le point cliqué sous le curseur pendant que l'image grandit / rétrécit
+        const r = modalImg.getBoundingClientRect();
+        cvModal.scrollTop += (r.top + fy * r.height) - clickY;
+        cvModal.scrollLeft += (r.left + fx * r.width) - clickX;
+
+        if (t < 1) {
+          zoomFrame = requestAnimationFrame(step);
+        } else {
+          clearInlineSizes(); // le CSS (.zoomed-in ou état normal) reprend la main
+        }
+      };
+      zoomFrame = requestAnimationFrame(step);
+    });
+
+    // 3. Fermer au clic sur la croix
+    closeModal.addEventListener('click', () => {
+      cvModal.classList.remove('show');
+    });
+
+    // 4. Fermer au clic sur le fond noir en dehors de l'image
+    cvModal.addEventListener('click', (event) => {
+      if (event.target === cvModal) {
+        cvModal.classList.remove('show');
+      }
+    });
+
+    // 5. Fermer avec la touche "Échap" du clavier
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && cvModal.classList.contains('show')) {
+        cvModal.classList.remove('show');
+      }
+    });
+  }
+});

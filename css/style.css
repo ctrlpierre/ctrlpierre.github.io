@@ -1445,7 +1445,7 @@ h6,
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    padding-top: 14rem; /* Maintient le texte sous le header */
+    padding-top: 24rem; /* Maintient le texte sous le header */
     
     /* Nouvelles règles pour empêcher le chevauchement : */
     height: auto !important; /* La section s'adapte à la taille de son contenu */
@@ -1505,12 +1505,13 @@ h6,
     margin-right: 18rem;
 }
 
-/* Le document PDF */
-.cv__iframe {
+/* L'image de l'aperçu du CV */
+.cv__image {
     width: 100%;
     height: 100%;
-    border: none;
-    pointer-events: none; /* Désactive les clics, la sélection de texte et le drag & drop */
+    object-fit: cover; /* Permet à l'image de bien remplir le conteneur */
+    pointer-events: none; /* Empêche le drag & drop ou le clic droit sur l'image */
+    display: block;
 }
 
 /* Calque invisible par-dessus pour bloquer complètement les interactions */
@@ -1541,4 +1542,96 @@ h6,
 /* Décalage du scroll pour le menu fixe */
 #cv {
     scroll-margin-top: 8rem;
+}
+
+/* ==========================================================================
+   ANIMATION ET MODALE DE ZOOM POUR LE CV
+   ========================================================================== */
+
+/* Animation de rotation et curseur sur le conteneur existant */
+.cv__preview-container {
+    transition: transform 0.4s ease, box-shadow 0.4s ease !important;
+    cursor: zoom-in; /* Change la souris en loupe pour indiquer l'action */
+}
+
+/* Effet de survol : légère rotation et grossissement */
+.cv__preview-container:hover {
+    transform: rotate(-0.5deg) scale(1.02) !important;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Le fond plein écran de la modale de zoom */
+.cv-modal {
+    display: flex;
+    align-items: flex-start; /* Changé pour éviter de couper le haut de l'image géante */
+    justify-content: center;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    overflow-y: auto; /* Permet de scroller verticalement */
+    padding: 4rem 2vw; /* Garde toujours un espace cliquable autour du CV pour quitter */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cv-modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* L'image du CV en grand (Zoom 1) */
+.cv-modal__content {
+    margin: auto; /* Permet de centrer l'image quand on est en Zoom 1 */
+    max-width: 95%;
+    max-height: 90vh; /* Contraint l'image à la hauteur de l'écran */
+    border-radius: 5px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    cursor: zoom-in; /* Indique qu'on peut cliquer pour agrandir encore */
+    transform: scale(0.92); 
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); /* width / max-width sont animés en JS (zoom progressif) */
+}
+
+.cv-modal.show .cv-modal__content {
+    transform: scale(1);
+}
+
+/* Le Zoom 2 (ajouté via Javascript au clic) */
+.cv-modal__content.zoomed-in {
+    max-height: none; /* Fait sauter la limite de hauteur : le scroll s'active */
+    max-width: 1200px; /* L'image s'affiche en énorme (ajustez si besoin) */
+    width: 96%;
+    will-change: width;
+    cursor: zoom-out; /* Indique qu'on peut recliquer pour revenir au Zoom 1 */
+}
+
+/* La croix pour fermer */
+.cv-modal__close {
+    position: fixed; /* Changé de absolute à fixed pour qu'elle suive le scroll */
+    top: 2rem;
+    right: 4rem;
+    color: #fff;
+    font-size: 4rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    z-index: 2001; /* Assure que la croix reste au-dessus de l'image géante */
+}
+
+.cv-modal__close:hover {
+    color: #e74c3c;
+}
+
+/* Adaptation sur téléphone */
+@media only screen and (max-width: 37.5em) {
+    .cv-modal__close {
+        top: 1rem;
+        right: 2rem;
+    }
 }

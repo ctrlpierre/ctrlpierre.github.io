@@ -173,7 +173,7 @@
             </div>
             <h3 class="about__content-title">Centres d'Intérêt</h3>
             <div class="skills">
-              <div class="skills__skill">MAO (FL Studio)</div>
+              <div class="skills__skill">MAO (Ableton & FL Studio)</div>
               <div class="skills__skill">Sound Design</div>
             </div>
           </div>
@@ -239,7 +239,7 @@
           <!-- Colonne droite : Aperçu PDF réduit et protégé -->
           <div class="cv__preview-container">
             <!-- toolbar=0 cache l'interface du navigateur -->
-            <iframe src="CV_Pierre_Parodi.pdf#toolbar=0&navpanes=0&scrollbar=0" class="cv__iframe"></iframe>
+            <img src="CV_Pierre_Parodi.png" alt="Aperçu du CV" class="cv__image">
             <!-- Calque invisible pour empêcher la sélection et le clic droit -->
             <div class="cv__overlay"></div>
           </div>
@@ -279,5 +279,12 @@
     <script src="./3d-background.js"></script>
     <script src="./index.js"></script>
     <script src="./bg-scintillement.js"></script>
+
+    <!-- Modale pour le zoom du CV -->
+    <div id="cv-modal" class="cv-modal">
+      <span class="cv-modal__close">&times;</span>
+      <img class="cv-modal__content" id="cv-modal-img" alt="Zoom du CV de Pierre Parodi">
+    </div>
+
   </body>
 </html>
